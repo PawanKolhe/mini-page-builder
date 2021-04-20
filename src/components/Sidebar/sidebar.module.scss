@@ -1,0 +1,17 @@
+.Sidebar {
+  width: 326px;
+  background-color: var(--color-dark-grey);
+  padding: 19px 23px;
+  height: 100%;
+
+  &__header {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 17px;
+  }
+
+  &__elementList {
+    display: grid;
+    gap: 9px;
+  }
+}
