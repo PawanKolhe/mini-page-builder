@@ -42,6 +42,8 @@ module.exports = {
     ],
     'no-use-before-define': 'off',
     'react/prop-types': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/no-noninteractive-element-interactions': 'off',
   },
   settings: {
     "import/resolver": {

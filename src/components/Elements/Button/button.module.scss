@@ -1,0 +1,12 @@
+.Button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 13px;
+  color: white;
+  background-color: var(--color-primary);
+  outline: none;
+  border: none;
+  user-select: none;
+  touch-action: none;
+}

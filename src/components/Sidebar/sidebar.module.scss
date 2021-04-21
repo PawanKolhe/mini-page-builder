@@ -3,6 +3,8 @@
   background-color: var(--color-dark-grey);
   padding: 19px 23px;
   height: 100%;
+  z-index: 1;
+  position: relative;
 
   &__header {
     color: white;

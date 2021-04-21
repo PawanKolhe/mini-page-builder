@@ -1,16 +1,21 @@
 import React from 'react';
 import ElementList from '../ElementList/ElementList';
 import styles from './sidebar.module.scss';
+import { Label, Input, Button } from '../Elements';
+import { Element } from '../../context/elementContext';
 
-const elements = [
+const elements: Element[] = [
   {
     name: 'Label',
+    JSX: Label,
   },
   {
     name: 'Input',
+    JSX: Input,
   },
   {
     name: 'Button',
+    JSX: Button,
   },
 ];
 

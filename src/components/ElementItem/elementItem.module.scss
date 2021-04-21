@@ -1,0 +1,31 @@
+.ElementItem {
+  height: 49px;
+  background-color: #ffffff;
+  cursor: grab;
+  transition: all 0.2s ease-out;
+
+  border-radius: 4px;
+  padding: 0 11px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__icon {
+    color: #d5d5d5;
+    margin-right: 10px;
+  }
+
+  &__name {
+    color: #000000;
+    font-weight: 300;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.ElementItem__dragging {
+  opacity: 0.8;
+  transform: scale(0.99);
+}
