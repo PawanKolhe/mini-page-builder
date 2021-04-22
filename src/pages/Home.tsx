@@ -1,12 +1,12 @@
 import React from 'react';
-import ElementProvider from '../context/elementContext';
+import AppProvider from '../context/appContext';
 import Board from '../components/Board/Board';
 import Sidebar from '../components/Sidebar/Sidebar';
 import styles from './home.module.scss';
 
 const Home: React.FC = () => {
   return (
-    <ElementProvider>
+    <AppProvider>
       <div className={styles.Home}>
         <div className={styles.Home__board}>
           <Board />
@@ -15,7 +15,7 @@ const Home: React.FC = () => {
           <Sidebar />
         </div>
       </div>
-    </ElementProvider>
+    </AppProvider>
   );
 };
 

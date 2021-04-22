@@ -1,0 +1,33 @@
+.Draggable {
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  outline: none;
+  user-select: none;
+  touch-action: none;
+
+  &:hover {
+    outline: 2px solid rgba(217, 85, 9, 0.3);
+    cursor: grab;
+  }
+
+  &:active {
+    cursor: grabbing;
+    outline: 2px solid rgb(217, 84, 9);
+  }
+}
+
+.Draggable * {
+  pointer-events: none;
+}
+
+.Draggable__active {
+  outline: 2px solid rgb(217, 84, 9);
+  cursor: grabbing;
+
+  &:hover {
+    outline: 2px solid rgb(217, 85, 9);
+  }
+}
