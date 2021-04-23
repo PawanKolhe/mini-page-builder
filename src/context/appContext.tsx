@@ -19,10 +19,6 @@ export type AppContextType = {
   setSidebarDragItem: (element: Element) => void;
   sidebarDragNode: HTMLElement | null;
   setSidebarDragNode: (node: HTMLElement) => void;
-  selectedBoardElementItem: Element | null;
-  setSelectedBoardElementItem: (element: Element) => void;
-  selectedBoardElementNode: HTMLElement | null;
-  setSelectedBoardElementNode: (node: HTMLElement) => void;
   boardNode: HTMLElement | null;
   setBoardNode: (node: HTMLElement) => void;
 };
@@ -40,8 +36,6 @@ export function useApp(): any {
 const AppProvider: React.FC = ({ children }) => {
   const [sidebarDragItem, setSidebarDragItem] = React.useState<Element | null>(null);
   const [sidebarDragNode, setSidebarDragNode] = React.useState<HTMLElement | null>(null);
-  const [selectedBoardElementItem, setSelectedBoardElementItem] = React.useState<Element | null>(null);
-  const [selectedBoardElementNode, setSelectedBoardElementNode] = React.useState<HTMLElement | null>(null);
   const [boardNode, setBoardNode] = React.useState<HTMLElement | null>(null);
   return (
     <AppContext.Provider
@@ -50,10 +44,6 @@ const AppProvider: React.FC = ({ children }) => {
         setSidebarDragItem,
         sidebarDragNode,
         setSidebarDragNode,
-        selectedBoardElementItem,
-        setSelectedBoardElementItem,
-        selectedBoardElementNode,
-        setSelectedBoardElementNode,
         boardNode,
         setBoardNode,
       }}

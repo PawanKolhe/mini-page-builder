@@ -13,3 +13,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.ddcontainersource {
+  cursor: grab !important;
+
+  &:active {
+    cursor: grabbing !important;
+  }
+}
+
+.ddcontainerghost {
+  cursor: grabbing !important;
+  pointer-events: all !important;
+  user-select: none !important;
+  display: block;
+  opacity: 1 !important;
+
+  &:active {
+    cursor: grabbing !important;
+    pointer-events: all !important;
+  }
+}

@@ -44,6 +44,7 @@ module.exports = {
     'react/prop-types': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
+    'react/jsx-props-no-spreading': 'off'
   },
   settings: {
     "import/resolver": {

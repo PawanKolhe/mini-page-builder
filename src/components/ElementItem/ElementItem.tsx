@@ -4,17 +4,24 @@ import styles from './elementItem.module.scss';
 
 type Props = {
   name: string;
-  onDragStart: (e: React.DragEvent<HTMLDivElement>) => void;
   dragging: boolean;
+  className?: string;
+  isShadowElement?: boolean;
 };
 
-const ElementItem: React.FC<Props> = ({ name, onDragStart, dragging = false }) => {
+const ElementItem: React.FC<Props> = ({ name, dragging = false, className = '', isShadowElement = false }) => {
+  const getCustomClassNames = () => {
+    if (isShadowElement) {
+      return styles.ElementItem__shadow;
+    }
+    if (dragging) {
+      return styles.ElementItem__dragging;
+    }
+    return '';
+  };
+
   return (
-    <div
-      className={`${styles.ElementItem} ${dragging ? styles.ElementItem__dragging : ''}`}
-      draggable
-      onDragStart={onDragStart}
-    >
+    <div className={`${styles.ElementItem} ${getCustomClassNames()} ${className}`}>
       <div className={styles.ElementItem__icon}>
         <InlineIcon icon="fa-solid:grip-vertical" />
       </div>

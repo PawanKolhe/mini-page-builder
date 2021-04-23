@@ -1,56 +1,69 @@
-import React, { useState, useRef, useEffect, MouseEvent } from 'react';
+import React, { useState, useRef, useEffect, MouseEvent, KeyboardEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { DropTarget } from 'react-drag-drop-container';
 import { Element, ElementConfig, useApp } from '../../context/appContext';
-import Draggable from '../Draggable/Draggable';
 import { Label, Input, Button } from '../Elements';
+import ElementWrapper from '../ElementWrapper/ElementWrapper';
 import Modal from '../Modal/Modal';
 import styles from './board.module.scss';
 
 const Board: React.FC = () => {
-  const {
-    sidebarDragItem,
-    boardNode,
-    setBoardNode,
-    setSelectedBoardElementItem,
-    setSelectedBoardElementNode,
-  } = useApp();
+  const { sidebarDragItem, setBoardNode } = useApp();
   const [boardElements, setBoardElements] = useState<Element[]>([]);
   const boardRef = useRef<HTMLDivElement | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedElement, setSelectedElement] = useState<Element | null>(null);
+  const [initialElement, setInitialElement] = useState<Element | null>(null);
 
   useEffect(() => {
     setBoardNode(boardRef.current);
+
+    const boardElementsInLocalStorage = localStorage.getItem('boardElements');
+    if (boardElementsInLocalStorage) {
+      setBoardElements(JSON.parse(boardElementsInLocalStorage));
+    }
   }, []);
+
+  useEffect(() => {
+    boardRef.current?.focus();
+  }, [boardRef]);
+
+  useEffect(() => {
+    localStorage.setItem('boardElements', JSON.stringify(boardElements));
+  }, [boardElements]);
 
   const handleOnDragOver = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
   };
 
-  const handleOnDrop = (e: React.DragEvent<HTMLElement>) => {
+  const handleOnDrop = (e: any) => {
+    console.log('gg handleOnDrop', sidebarDragItem, e);
     e.preventDefault();
+    setSelectedElement(null);
     if (sidebarDragItem) {
-      setBoardElements([
-        ...boardElements,
-        {
-          id: uuidv4(),
-          elementType: sidebarDragItem.elementType,
-          config: {
-            text: sidebarDragItem.elementType,
-            x: e.pageX.toString(),
-            y: e.pageY.toString(),
-            fontSize: '',
-            fontWeight: '',
-          },
+      setInitialElement({
+        id: uuidv4(),
+        elementType: e.dragData.elementType,
+        config: {
+          text: e.dragData.elementType,
+          x: e.x.toString(),
+          y: e.y.toString(),
+          fontSize: '',
+          fontWeight: '',
         },
-      ]);
+      });
+      setModalOpen(true);
     }
   };
 
   const handleBoardOnClick = (e: MouseEvent<HTMLElement>) => {
-    if (e.target === boardNode) {
-      setSelectedBoardElementItem(null);
-      setSelectedBoardElementNode(null);
+    if (e.target === boardRef.current) {
+      setSelectedElement(null);
     }
+  };
+
+  const addBoardElement = (newElement: Element) => {
+    setBoardElements([...boardElements, newElement]);
   };
 
   const deleteBoardElement = (elementID: string) => {
@@ -61,52 +74,116 @@ const Board: React.FC = () => {
     setBoardElements(
       boardElements.map((element) => {
         if (element.id === elementID) {
-          return { ...element, config: { ...elementConfig } };
+          return { ...element, config: elementConfig };
         }
         return element;
       }),
     );
-    setModalOpen(false);
   };
 
   const getElementJSX = (element: Element) => {
+    const style = {
+      fontSize: `${element.config.fontSize}px`,
+      fontWeight: parseInt(`${element.config.fontWeight}`, 10) || 400,
+    };
+
     switch (element.elementType) {
       case 'Label':
-        return <Label text={element.config.text} />;
+        return <Label text={element.config.text} style={style} />;
       case 'Input':
-        return <Input value={element.config.text} />;
+        return <Input text={element.config.text} style={style} />;
       case 'Button':
-        return <Button text={element.config.text} />;
+        return <Button text={element.config.text} style={style} />;
       default:
         return null;
     }
   };
 
+  const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    console.log('KEY');
+    if (selectedElement) {
+      if (e.key === 'Enter') {
+        setModalOpen(true);
+      } else if (e.key === 'Delete') {
+        deleteBoardElement(selectedElement.id);
+      }
+    }
+  };
+
+  const onElementSave = (elementID: string, elementConfig: ElementConfig) => {
+    updateBoardElement(elementID, elementConfig);
+    setModalOpen(false);
+    setSelectedElement(null);
+  };
+
+  const onNewElementSave = (elementConfig: ElementConfig) => {
+    if (initialElement) {
+      const newElement: Element = {
+        id: initialElement?.id,
+        elementType: initialElement?.elementType,
+        config: {
+          text: elementConfig.text,
+          x: elementConfig.x,
+          y: elementConfig.y,
+          fontSize: elementConfig.fontSize || '',
+          fontWeight: elementConfig.fontWeight || '',
+        },
+      };
+      addBoardElement(newElement);
+      setInitialElement(null);
+    }
+    setModalOpen(false);
+  };
+
+  const onModalClose = () => {
+    setModalOpen(false);
+    setInitialElement(null);
+    setSelectedElement(null);
+  };
+
   return (
     <>
-      <div
-        ref={boardRef}
-        className={styles.Board}
-        onDragOver={handleOnDragOver}
-        onDrop={handleOnDrop}
-        onClick={handleBoardOnClick}
-        role="none"
+      <DropTarget
+        targetKey="elements"
+        dropData={{ foo: 'bar' }}
+        onHit={handleOnDrop}
+        // onDragEnter={some function}
+        // onDragLeave={some function}
       >
-        {boardElements.map((element) => {
-          return (
-            <Draggable
-              key={element.id}
-              element={element}
-              deleteBoardElement={deleteBoardElement}
-              updateBoardElement={updateBoardElement}
-              openModal={() => setModalOpen(true)}
-            >
-              {getElementJSX(element)}
-            </Draggable>
-          );
-        })}
-      </div>
-      <Modal open={modalOpen} closeModal={() => setModalOpen(false)} updateBoardElement={updateBoardElement} />
+        <div
+          ref={boardRef}
+          className={styles.Board}
+          onDragOver={handleOnDragOver}
+          // onDrop={handleOnDrop}
+          onClick={handleBoardOnClick}
+          onKeyDown={handleOnKeyDown}
+          role="button"
+          tabIndex={-1}
+        >
+          {boardElements.map((element) => {
+            return (
+              <ElementWrapper
+                key={element.id}
+                element={element}
+                deleteBoardElement={deleteBoardElement}
+                updateBoardElement={updateBoardElement}
+                setSelectedElement={setSelectedElement}
+                selectedElement={selectedElement}
+              >
+                {getElementJSX(element)}
+              </ElementWrapper>
+            );
+          })}
+        </div>
+      </DropTarget>
+      <Modal
+        open={modalOpen}
+        selectedElement={selectedElement}
+        initialElement={initialElement}
+        closeModal={onModalClose}
+        onElementSave={onElementSave}
+        onNewElementSave={onNewElementSave}
+      />
     </>
   );
 };

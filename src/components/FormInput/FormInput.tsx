@@ -8,9 +8,22 @@ type Props = {
   placeholder?: string;
   id: string;
   label?: string;
+  min?: number | string;
+  max?: number | string;
+  step?: number | string;
 };
 
-const FormInput: React.FC<Props> = ({ value, onChange, type = 'text', placeholder = '', id, label }) => {
+const FormInput: React.FC<Props> = ({
+  value,
+  onChange,
+  type = 'text',
+  placeholder = '',
+  id,
+  label,
+  min,
+  max,
+  step,
+}) => {
   return (
     <div className={styles.FormInput}>
       {label && (
@@ -25,6 +38,9 @@ const FormInput: React.FC<Props> = ({ value, onChange, type = 'text', placeholde
         placeholder={placeholder}
         type={type}
         id={id}
+        step={step}
+        min={min}
+        max={max}
       />
     </div>
   );

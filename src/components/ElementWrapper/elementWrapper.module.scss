@@ -1,12 +1,12 @@
-.Draggable {
-  width: auto;
-  height: auto;
+.ElementWrapper {
+  display: inline-block;
   position: absolute;
   top: 0;
   left: 0;
   outline: none;
-  user-select: none;
   touch-action: none;
+  pointer-events: visible;
+  user-select: none;
 
   &:hover {
     outline: 2px solid rgba(217, 85, 9, 0.3);
@@ -19,11 +19,11 @@
   }
 }
 
-.Draggable * {
+.ElementWrapper * {
   pointer-events: none;
 }
 
-.Draggable__active {
+.ElementWrapper__active {
   outline: 2px solid rgb(217, 84, 9);
   cursor: grabbing;
 

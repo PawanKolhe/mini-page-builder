@@ -2,3 +2,14 @@
   display: grid;
   gap: 9px;
 }
+
+.ElementList__shadowElement {
+  position: relative;
+  pointer-events: none;
+}
+
+.ElementList__shadowElementInner {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

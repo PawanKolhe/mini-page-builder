@@ -3,16 +3,25 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import FormButton from '../FormButton/FormButton';
 import FormInput from '../FormInput/FormInput';
 import styles from './modal.module.scss';
-import { ElementConfig, useApp } from '../../context/appContext';
+import { Element, ElementConfig } from '../../context/appContext';
 
 type Props = {
   open: boolean;
   closeModal: () => void;
-  updateBoardElement: (elementId: string, elementConfig: ElementConfig) => void;
+  onElementSave: (elementId: string, elementConfig: ElementConfig) => void;
+  onNewElementSave: (elementConfig: ElementConfig) => void;
+  selectedElement: Element | null;
+  initialElement: Element | null;
 };
 
-const Modal: React.FC<Props> = ({ open, closeModal, updateBoardElement }) => {
-  const { selectedBoardElementItem } = useApp();
+const Modal: React.FC<Props> = ({
+  open,
+  closeModal,
+  onElementSave,
+  onNewElementSave,
+  selectedElement,
+  initialElement,
+}) => {
   const [formState, _setFormState] = useState<ElementConfig>({
     text: '',
     x: '',
@@ -27,28 +36,58 @@ const Modal: React.FC<Props> = ({ open, closeModal, updateBoardElement }) => {
 
   useEffect(() => {
     // Set initial form values
-    if (selectedBoardElementItem) {
+    if (initialElement) {
       _setFormState({
-        text: selectedBoardElementItem.config.text,
-        x: selectedBoardElementItem.config.x,
-        y: selectedBoardElementItem.config.y,
-        fontSize: selectedBoardElementItem.config.fontSize,
-        fontWeight: selectedBoardElementItem.config.fontWeight,
+        text: initialElement.config.text,
+        x: initialElement.config.x,
+        y: initialElement.config.y,
+        fontSize: initialElement.config.fontSize,
+        fontWeight: initialElement.config.fontWeight,
+      });
+    } else if (selectedElement) {
+      _setFormState({
+        text: selectedElement.config.text,
+        x: selectedElement.config.x,
+        y: selectedElement.config.y,
+        fontSize: selectedElement.config.fontSize,
+        fontWeight: selectedElement.config.fontWeight,
+      });
+    } else {
+      _setFormState({
+        text: '',
+        x: '',
+        y: '',
+        fontSize: '',
+        fontWeight: '',
       });
     }
-  }, [selectedBoardElementItem]);
+  }, [selectedElement, initialElement]);
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    updateBoardElement(selectedBoardElementItem.id, formState);
+    if (selectedElement) {
+      onElementSave(selectedElement.id, formState);
+    } else {
+      onNewElementSave(formState);
+    }
+  };
+
+  const getModalTitle = () => {
+    if (initialElement) {
+      return `Add ${initialElement.elementType}`;
+    }
+    if (selectedElement) {
+      return `Edit ${selectedElement.elementType}`;
+    }
+    return '';
   };
 
   return (
     <div className={`${styles.Modal} ${open ? styles.Modal__open : ''}`}>
       <div className={styles.Modal__overlay}>
-        <div className={styles.Modal__content}>
+        <div className={styles.Modal__content} tabIndex={-1}>
           <div className={styles.Modal__header}>
-            <div className={styles.Modal__headerTitle}>Edit Label</div>
+            <div className={styles.Modal__headerTitle}>{getModalTitle()}</div>
             <button type="button" className={styles.Modal__headerCloseButton} onClick={closeModal}>
               <InlineIcon icon="uil:times" />
             </button>
@@ -63,19 +102,37 @@ const Modal: React.FC<Props> = ({ open, closeModal, updateBoardElement }) => {
                   value={formState.text}
                   onChange={(value) => setFormState('text', value)}
                 />
-                <FormInput id="x" label="X" value={formState.x} onChange={(value) => setFormState('x', value)} />
-                <FormInput id="y" label="Y" value={formState.y} onChange={(value) => setFormState('y', value)} />
                 <FormInput
+                  type="number"
+                  id="x"
+                  label="X"
+                  value={formState.x}
+                  onChange={(value) => setFormState('x', value)}
+                />
+                <FormInput
+                  type="number"
+                  id="y"
+                  label="Y"
+                  value={formState.y}
+                  onChange={(value) => setFormState('y', value)}
+                />
+                <FormInput
+                  type="number"
                   id="fontSize"
                   label="Font Size"
                   value={formState.fontSize}
                   onChange={(value) => setFormState('fontSize', value)}
+                  min={0}
                 />
                 <FormInput
+                  type="number"
                   id="fontWeight"
                   label="Font Weight"
                   value={formState.fontWeight}
                   onChange={(value) => setFormState('fontWeight', value)}
+                  step={100}
+                  min={100}
+                  max={900}
                 />
               </div>
               <div className={styles.Modal__actionButtons}>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DragDropContainer } from 'react-drag-drop-container';
 import ElementItem from '../ElementItem/ElementItem';
 import { Element, useApp } from '../../context/appContext';
 import styles from './elementList.module.scss';
@@ -41,6 +42,7 @@ const ElementList: React.FC = () => {
   };
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>, element: Element) => {
+    console.log('gg', e);
     setSidebarDragItem(element);
     setSidebarDragNode(e.target as HTMLElement);
     setImmediate(() => {
@@ -63,12 +65,25 @@ const ElementList: React.FC = () => {
   return (
     <div className={styles.ElementList}>
       {elements.map((element) => (
-        <ElementItem
-          dragging={isElementDragging(element)}
+        <DragDropContainer
+          targetKey="elements"
           key={element.elementType}
-          name={element.elementType}
-          onDragStart={(e) => handleDragStart(e, element)}
-        />
+          dragData={element}
+          onDragStart={(e: any) => handleDragStart(e, element)}
+          onDragEnd={handleDragEnd}
+          customDragElement={
+            <div className={styles.ElementList__shadowElement}>
+              <ElementItem
+                dragging={isElementDragging(element)}
+                name={element.elementType}
+                className={styles.ElementList__shadowElementInner}
+                isShadowElement
+              />
+            </div>
+          }
+        >
+          <ElementItem dragging={isElementDragging(element)} name={element.elementType} />
+        </DragDropContainer>
       ))}
     </div>
   );
