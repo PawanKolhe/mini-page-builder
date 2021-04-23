@@ -4,7 +4,10 @@
 
 ## ⭐ Features
 
-- Drag and Drop elements to the board
+- Drag and Drop elements from sidebar to board
+- Edit element configuration
+- Delete element from board
+- Element position can be changed by dragging it across the board
 - Board Elements state stored on Local Storage to persist state across page refresh
 
 ## 💻 Tech / Libraries
