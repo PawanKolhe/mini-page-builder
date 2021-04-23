@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, MouseEvent, KeyboardEvent } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
-import { Element, ElementConfig, useApp } from '../../context/appContext';
+import { Element, ElementConfig } from '../../types/element';
 import styles from './elementWrapper.module.scss';
 
 type Props = {

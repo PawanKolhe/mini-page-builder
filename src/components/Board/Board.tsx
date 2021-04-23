@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect, MouseEvent, KeyboardEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { DropTarget } from 'react-drag-drop-container';
-import { Element, ElementConfig, useApp } from '../../context/appContext';
+import { Element, ElementConfig } from '../../types/element';
 import { Label, Input, Button } from '../Elements';
 import ElementWrapper from '../ElementWrapper/ElementWrapper';
 import Modal from '../Modal/Modal';
 import styles from './board.module.scss';
 
 const Board: React.FC = () => {
-  const { sidebarDragItem, setBoardNode } = useApp();
   const [boardElements, setBoardElements] = useState<Element[]>([]);
   const boardRef = useRef<HTMLDivElement | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,8 +15,6 @@ const Board: React.FC = () => {
   const [initialElement, setInitialElement] = useState<Element | null>(null);
 
   useEffect(() => {
-    setBoardNode(boardRef.current);
-
     const boardElementsInLocalStorage = localStorage.getItem('boardElements');
     if (boardElementsInLocalStorage) {
       setBoardElements(JSON.parse(boardElementsInLocalStorage));
@@ -37,10 +34,9 @@ const Board: React.FC = () => {
   };
 
   const handleOnDrop = (e: any) => {
-    console.log('gg handleOnDrop', sidebarDragItem, e);
     e.preventDefault();
     setSelectedElement(null);
-    if (sidebarDragItem) {
+    if (e.dragData) {
       setInitialElement({
         id: uuidv4(),
         elementType: e.dragData.elementType,
@@ -100,7 +96,6 @@ const Board: React.FC = () => {
   };
 
   const handleOnKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    console.log('KEY');
     if (selectedElement) {
       if (e.key === 'Enter') {
         setModalOpen(true);
@@ -143,18 +138,10 @@ const Board: React.FC = () => {
 
   return (
     <>
-      <DropTarget
-        targetKey="elements"
-        dropData={{ foo: 'bar' }}
-        onHit={handleOnDrop}
-        // onDragEnter={some function}
-        // onDragLeave={some function}
-      >
+      <DropTarget targetKey="elements" dropData={{ foo: 'bar' }} onHit={handleOnDrop}>
         <div
-          ref={boardRef}
           className={styles.Board}
           onDragOver={handleOnDragOver}
-          // onDrop={handleOnDrop}
           onClick={handleBoardOnClick}
           onKeyDown={handleOnKeyDown}
           role="button"

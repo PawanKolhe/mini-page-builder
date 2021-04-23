@@ -3,7 +3,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import FormButton from '../FormButton/FormButton';
 import FormInput from '../FormInput/FormInput';
 import styles from './modal.module.scss';
-import { Element, ElementConfig } from '../../context/appContext';
+import { Element, ElementConfig } from '../../types/element';
 
 type Props = {
   open: boolean;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContainer } from 'react-drag-drop-container';
 import ElementItem from '../ElementItem/ElementItem';
-import { Element, useApp } from '../../context/appContext';
+import { Element } from '../../types/element';
 import styles from './elementList.module.scss';
 
 const initialConfig = {
@@ -31,32 +31,21 @@ const elements: Element[] = [
 ];
 
 const ElementList: React.FC = () => {
-  const { sidebarDragItem, setSidebarDragItem, sidebarDragNode, setSidebarDragNode } = useApp();
   const [dragging, setDragging] = useState(false);
+  const [draggingElement, setDraggingElement] = useState<Element | null>(null);
 
-  const handleDragEnd = (e: any) => {
+  const handleDragEnd = () => {
+    setDraggingElement(null);
     setDragging(false);
-    sidebarDragNode?.removeEventListener('dragend', handleDragEnd);
-    setSidebarDragNode(null);
-    setSidebarDragItem(null);
   };
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, element: Element) => {
-    console.log('gg', e);
-    setSidebarDragItem(element);
-    setSidebarDragNode(e.target as HTMLElement);
-    setImmediate(() => {
-      setDragging(true);
-    });
+  const handleDragStart = (element: Element) => {
+    setDraggingElement(element);
+    setDragging(true);
   };
-
-  useEffect(() => {
-    sidebarDragNode?.addEventListener('dragend', handleDragEnd);
-  }, [sidebarDragNode]);
 
   const isElementDragging = (element: Element) => {
-    const currentItem = sidebarDragItem;
-    if (dragging && currentItem?.elementType === element.elementType) {
+    if (dragging && draggingElement?.elementType === element.elementType) {
       return true;
     }
     return false;
@@ -68,9 +57,10 @@ const ElementList: React.FC = () => {
         <DragDropContainer
           targetKey="elements"
           key={element.elementType}
+          dragElemOpacity={1}
           dragData={element}
-          onDragStart={(e: any) => handleDragStart(e, element)}
-          onDragEnd={handleDragEnd}
+          onDragStart={() => handleDragStart(element)}
+          onDragEnd={() => handleDragEnd()}
           customDragElement={
             <div className={styles.ElementList__shadowElement}>
               <ElementItem
