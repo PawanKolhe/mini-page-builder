@@ -37,9 +37,29 @@
 
    ![Screenshot2](https://user-images.githubusercontent.com/8324407/115888757-e928f500-a470-11eb-9e21-109c530bbfc5.PNG)
 
+
+## Local Environment Setup
+
+1. Install [Node.js](https://nodejs.org/en/)
+1. Install project dependencies
+   ```bash
+   npm install
+   ```
+1. Launch live server
+   ```bash
+   npm run start
+   ```
+
 ## Documentation
 
 ### Directory Structure
+
+- `components/` - all components that are not pages
+- `pages/` - components with a defined route
+- `sassStyles/` - global Sass stylesheets
+- `types/` - commonly used typescript type definitions
+- `externals.d.ts` - type definitions of external libraries that don't have @types
+- `index.tsx` - entry point of application
 
 ```markdown
 📦src
@@ -77,11 +97,6 @@
  ┗ 📜index.tsx
 ```
 
-- `components/` - all components that are not pages
-- `pages/` - components with a defined route
-- `sassStyles/` - global Sass stylesheets
-- `types/` - commonly used typescript type definitions
-- `externals.d.ts` - type definitions of external libraries that don't have @types
-- `index.tsx` - entry point of application
-
 ### Components Structure
+
+
