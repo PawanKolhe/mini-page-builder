@@ -29,6 +29,7 @@ const Board: React.FC = () => {
     e.preventDefault();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleOnDrop = (e: any) => {
     e.preventDefault();
     setSelectedElement(null);
