@@ -1,46 +1,31 @@
-# Getting Started with Create React App
+# Mini Page Builder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Screenshot](https://user-images.githubusercontent.com/8324407/115888804-f514b700-a470-11eb-9fcc-3a441b635a0f.png)
 
-## Available Scripts
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- Drag and Drop elements to the board
+- Board Elements state stored on Local Storage to persist state across page refresh
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech Used
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Sass](https://sass-lang.com/)
+- [react-draggable](https://github.com/react-grid-layout/react-draggable) (for dragging elements on the board)
+- [react-drag-drop-container](https://github.com/peterh32/react-drag-drop-container) (for dragging elements from sidebar to board)
+- [ESLint with airbnb](to maintain coding style)
+- [Prettier](to automatically enforce coding style)
 
-### `npm test`
+## Usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Drag and Drop Elements from Sidebar to the Board.
 
-### `npm run build`
+  ![Screenshot1](https://user-images.githubusercontent.com/8324407/115888565-b252df00-a470-11eb-8d1c-92582bbdb5bf.png)
+  
+- Drag the Elements on the board to change their position.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Edit Element configurations (Text, X, Y, Font Size, Font Weight).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+  ![Screenshot2](https://user-images.githubusercontent.com/8324407/115888757-e928f500-a470-11eb-9e21-109c530bbfc5.PNG)
