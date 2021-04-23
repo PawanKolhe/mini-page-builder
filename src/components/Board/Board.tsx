@@ -22,10 +22,6 @@ const Board: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    boardRef.current?.focus();
-  }, [boardRef]);
-
-  useEffect(() => {
     localStorage.setItem('boardElements', JSON.stringify(boardElements));
   }, [boardElements]);
 
@@ -53,7 +49,6 @@ const Board: React.FC = () => {
   };
 
   const handleBoardOnClick = (e: MouseEvent<HTMLElement>) => {
-    console.log(e.target, boardRef.current);
     if (e.target === boardRef.current) {
       setSelectedElement(null);
     }
@@ -154,7 +149,6 @@ const Board: React.FC = () => {
               <ElementWrapper
                 key={element.id}
                 element={element}
-                deleteBoardElement={deleteBoardElement}
                 updateBoardElement={updateBoardElement}
                 setSelectedElement={setSelectedElement}
                 selectedElement={selectedElement}

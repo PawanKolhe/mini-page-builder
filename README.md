@@ -54,21 +54,14 @@
 
 ### Directory Structure
 
-- `components/` - all components that are not pages
-- `pages/` - components with a defined route
-- `sassStyles/` - global Sass stylesheets
-- `types/` - commonly used typescript type definitions
-- `externals.d.ts` - type definitions of external libraries that don't have @types
-- `index.tsx` - entry point of application
-
 ```markdown
 📦src
  ┣ 📂components
  ┃ ┣ 📂Board
- ┃ ┃ ┣ 📜board.module.scss
+ ┃ ┃ ┣ 🎨board.module.scss
  ┃ ┃ ┗ 📜Board.tsx
  ┃ ┣ 📂ElementItem
- ┃ ┃ ┣ 📜elementItem.module.scss
+ ┃ ┃ ┣ 🎨elementItem.module.scss
  ┃ ┃ ┗ 📜ElementItem.tsx
  ┃ ┣ 📂ElementList
  ┃ ┣ 📂Elements
@@ -82,21 +75,57 @@
  ┃ ┣ 📂Modal
  ┃ ┗ 📂Sidebar
  ┣ 📂pages
- ┃ ┣ 📜home.module.scss
+ ┃ ┣ 🎨home.module.scss
  ┃ ┗ 📜Home.tsx
  ┣ 📂sassStyles
- ┃ ┣ 📜index.scss
- ┃ ┣ 📜_global.scss
- ┃ ┣ 📜_typography.scss
- ┃ ┗ 📜_variables.scss
+ ┃ ┣ 🎨index.scss
+ ┃ ┣ 🎨_global.scss
+ ┃ ┣ 🎨_typography.scss
+ ┃ ┗ 🎨_variables.scss
  ┣ 📂types
  ┃ ┗ 📜element.tsx
- ┣ 📜App.scss
+ ┣ 🎨App.scss
  ┣ 📜App.tsx
  ┣ 📜externals.d.ts
  ┗ 📜index.tsx
 ```
 
-### Components Structure
+- `components/` - all components that are not pages
+- `pages/` - components with a defined route
+- `sassStyles/` - global Sass stylesheets
+- `types/` - commonly used typescript type definitions
+- `externals.d.ts` - type definitions of external libraries that don't have @types
+- `index.tsx` - entry point of application
 
+### Components Tree
+```markdown
+⚫️App
+ ┗ 🟣Home
+   ┣ 🟡DropTarget
+   ┃ ┗ 🔵Board
+   ┃   ┣ 🟠ElementWrapper
+   ┃   ┃ ┗ 🟡Draggable
+   ┃   ┃   ┣ 🟠Label
+   ┃   ┃   ┣ 🟠Input
+   ┃   ┃   ┗ 🟠Button
+   ┃   ┗ 🔵Modal
+   ┃     ┣ 🟠FormInput
+   ┃     ┗ 🟠FormButton
+   ┗ 🔵Sidebar
+     ┗ 🔵ElementList
+       ┗ 🟡DragDropContainer
+         ┗ 🟠ElementItem
 
+🟣 --> Page
+🟡 --> External library
+🔵 --> Single-use component
+🟠 --> Multi-use component
+```
+
+- There is only 1 page in the app i.e. **Home** component.
+- **Home** has two components: **Board** and **Sidebar**
+- **Sidebar** contains **ElementList** component which contains **ElementItem** wrapped in **DragDropContainer** from the `react-drag-drop-container` library which makes dragging and dropping elements to the board easier as we can pass it data that will be directly received by **DropTarget** (which is wrapped around the **Board** component) on drop. The data being passed between **DragDropContainer** and **DropTarget** will contain information about which element needs to be created on the board (Label, Input, or Button).
+- **Board** holds the elements state on the board and handles logic related to *adding*, *updating*, and *deleting* elements on the board.
+- Everytime the elements state is updated, a useEffect hook stores the elements state to the local storage.
+- **Board** also contains the **Modal** component which is used to edit element configuration.
+- Each element on the board (i.e. Label, Input, or Button) is wrapped with the **Draggable** component from the `react-draggable` library, which in turn is wrapped with the **ElementWrapper** component which handles logic related to triggering updates to element position on drag and selecting the element on click.

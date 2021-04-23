@@ -5,7 +5,6 @@ import styles from './elementWrapper.module.scss';
 
 type Props = {
   element: Element;
-  deleteBoardElement: (elementID: string) => void;
   updateBoardElement: (elementID: string, elementConfig: ElementConfig) => void;
   setSelectedElement: (element: Element | null) => void;
   selectedElement: Element | null;
@@ -14,7 +13,6 @@ type Props = {
 const ElementWrapper: React.FC<Props> = ({
   children,
   element,
-  deleteBoardElement,
   updateBoardElement,
   setSelectedElement,
   selectedElement,
