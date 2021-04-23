@@ -2,24 +2,23 @@
 
 ![Screenshot](https://user-images.githubusercontent.com/8324407/115888804-f514b700-a470-11eb-9fcc-3a441b635a0f.png)
 
-## Features
+## ⭐ Features
 
 - Drag and Drop elements to the board
 - Board Elements state stored on Local Storage to persist state across page refresh
 
-## Tech / Libraries
+## 💻 Tech / Libraries
 
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Sass](https://sass-lang.com/)
-- [react-draggable](https://github.com/react-grid-layout/react-draggable) (dragging elements on the board)
+- [react-draggable](https://github.com/react-grid-layout/react-draggable) (dragging elements within the board)
 - [react-drag-drop-container](https://github.com/peterh32/react-drag-drop-container) (dragging elements from sidebar to board)
 - [ESLint](https://eslint.org/) (maintaining coding style)
 - [Prettier]() (automatically enforcing coding style)
-- [airbnb/javascript](https://github.com/airbnb/javascript) (style guide)
 - [uuid](https://github.com/uuidjs/uuid) (generating unique ID for each element)
 
-## Usage
+## 🕹 Usage
 
 1. Drag and Drop Elements from Sidebar to the Board.
 
@@ -38,7 +37,7 @@
    ![Screenshot2](https://user-images.githubusercontent.com/8324407/115888757-e928f500-a470-11eb-9e21-109c530bbfc5.PNG)
 
 
-## Local Environment Setup
+## 🔧 Local Environment Setup
 
 1. Install [Node.js](https://nodejs.org/en/)
 1. Install project dependencies
@@ -50,7 +49,13 @@
    npm run start
    ```
 
-## Documentation
+## 📝 Documentation
+
+### Style Guide
+
+- React code follows the [airbnb/javascript](https://github.com/airbnb/javascript) style guidelines to maintain consistency in a collaborative environment.
+
+- CSS classnames adhere to the [BEM](http://getbem.com/) methodology.
 
 ### Directory Structure
 
@@ -124,7 +129,7 @@
 
 - There is only 1 page in the app i.e. **Home** component.
 - **Home** has two components: **Board** and **Sidebar**
-- **Sidebar** contains **ElementList** component which contains **ElementItem** wrapped in **DragDropContainer** from the `react-drag-drop-container` library which makes dragging and dropping elements to the board easier as we can pass it data that will be directly received by **DropTarget** (which is wrapped around the **Board** component) on drop. The data being passed between **DragDropContainer** and **DropTarget** will contain information about which element needs to be created on the board (Label, Input, or Button).
+- **Sidebar** contains **ElementList** component which contains **ElementItem** wrapped in **DragDropContainer** from the `react-drag-drop-container` library which makes dragging and dropping elements to the board easier as we can pass it data that will be directly received by **DropTarget** component (which is wrapped around the **Board** component) on drop. The data being passed between **DragDropContainer** and **DropTarget** will contain information about which element needs to be created on the board (Label, Input, or Button).
 - **Board** holds the elements state on the board and handles logic related to *adding*, *updating*, and *deleting* elements on the board.
 - Everytime the elements state is updated, a useEffect hook stores the elements state to the local storage.
 - **Board** also contains the **Modal** component which is used to edit element configuration.
