@@ -20,6 +20,7 @@
 - [ESLint](https://eslint.org/) (maintaining coding style)
 - [Prettier]() (automatically enforcing coding style)
 - [uuid](https://github.com/uuidjs/uuid) (generating unique ID for each element)
+- [Iconify](https://www.npmjs.com/package/@iconify/react-with-api) (icons)
 
 ## 🕹 Usage
 
