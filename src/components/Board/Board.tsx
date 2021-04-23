@@ -53,6 +53,7 @@ const Board: React.FC = () => {
   };
 
   const handleBoardOnClick = (e: MouseEvent<HTMLElement>) => {
+    console.log(e.target, boardRef.current);
     if (e.target === boardRef.current) {
       setSelectedElement(null);
     }
@@ -140,6 +141,7 @@ const Board: React.FC = () => {
     <>
       <DropTarget targetKey="elements" dropData={{ foo: 'bar' }} onHit={handleOnDrop}>
         <div
+          ref={boardRef}
           className={styles.Board}
           onDragOver={handleOnDragOver}
           onClick={handleBoardOnClick}
