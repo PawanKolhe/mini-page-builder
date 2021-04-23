@@ -1,6 +1,6 @@
 # Mini Page Builder
 
-![Screenshot](https://user-images.githubusercontent.com/8324407/115888804-f514b700-a470-11eb-9fcc-3a441b635a0f.png)
+![GIF](https://user-images.githubusercontent.com/8324407/115931575-f95cc680-a4a8-11eb-8f1f-cc5e839fc47c.gif)
 
 ## ⭐ Features
 
