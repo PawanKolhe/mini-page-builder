@@ -21,14 +21,67 @@
 
 ## Usage
 
-- Drag and Drop Elements from Sidebar to the Board.
+1. Drag and Drop Elements from Sidebar to the Board.
 
-  ![Screenshot1](https://user-images.githubusercontent.com/8324407/115888565-b252df00-a470-11eb-8d1c-92582bbdb5bf.png)
+   ![Screenshot1](https://user-images.githubusercontent.com/8324407/115888565-b252df00-a470-11eb-8d1c-92582bbdb5bf.png)
 
-- Drag the Elements on the board to change their position.
+1. Drag the Elements on the board to change their position.
 
-- Edit Element configurations (Text, X, Y, Font Size, Font Weight).
+1. Click on an element on the board to select it.
 
-  ![Screenshot2](https://user-images.githubusercontent.com/8324407/115888757-e928f500-a470-11eb-9e21-109c530bbfc5.PNG)
+1. Pressing `Delete` on keyboard will delete the element from the board.
 
-##
+1. Pressing `Enter` on keyboard will open a modal where you can edit element configurations.
+
+1. Edit Element configurations (Text, X, Y, Font Size, Font Weight) and click `Save Changes` to update element state.
+
+   ![Screenshot2](https://user-images.githubusercontent.com/8324407/115888757-e928f500-a470-11eb-9e21-109c530bbfc5.PNG)
+
+## Documentation
+
+### Directory Structure
+
+```markdown
+📦src
+ ┣ 📂components
+ ┃ ┣ 📂Board
+ ┃ ┃ ┣ 📜board.module.scss
+ ┃ ┃ ┗ 📜Board.tsx
+ ┃ ┣ 📂ElementItem
+ ┃ ┃ ┣ 📜elementItem.module.scss
+ ┃ ┃ ┗ 📜ElementItem.tsx
+ ┃ ┣ 📂ElementList
+ ┃ ┣ 📂Elements
+ ┃ ┃ ┣ 📂Button
+ ┃ ┃ ┣ 📂Input
+ ┃ ┃ ┣ 📂Label
+ ┃ ┃ ┗ 📜index.tsx
+ ┃ ┣ 📂ElementWrapper
+ ┃ ┣ 📂FormButton
+ ┃ ┣ 📂FormInput
+ ┃ ┣ 📂Modal
+ ┃ ┗ 📂Sidebar
+ ┣ 📂pages
+ ┃ ┣ 📜home.module.scss
+ ┃ ┗ 📜Home.tsx
+ ┣ 📂sassStyles
+ ┃ ┣ 📜index.scss
+ ┃ ┣ 📜_global.scss
+ ┃ ┣ 📜_typography.scss
+ ┃ ┗ 📜_variables.scss
+ ┣ 📂types
+ ┃ ┗ 📜element.tsx
+ ┣ 📜App.scss
+ ┣ 📜App.tsx
+ ┣ 📜externals.d.ts
+ ┗ 📜index.tsx
+```
+
+- `components/` - all components that are not pages
+- `pages/` - components with a defined route
+- `sassStyles/` - global Sass stylesheets
+- `types/` - commonly used typescript type definitions
+- `externals.d.ts` - type definitions of external libraries that don't have @types
+- `index.tsx` - entry point of application
+
+### Components Structure
